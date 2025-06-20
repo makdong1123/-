@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산대학교 청렴 릴레이 서명</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            max-width: 800px;
+            width: 100%;
+            padding: 2.5rem; /* Increased padding */
+            display: flex;
+            flex-direction: column;
+            gap: 2rem; /* Space between sections */
+        }
+        .signature-canvas {
+            border: 2px solid #cbd5e0; /* Light border */
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            cursor: crosshair;
+            touch-action: none; /* Disable default touch actions to allow drawing */
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #374151; /* Darker gray for labels */
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6; /* Blue focus ring */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        .btn-primary {
+            background-color: #4f46e5; /* Indigo primary button */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: none; /* Ensure no default button border */
+        }
+        .btn-primary:hover {
+            background-color: #4338ca; /* Darker indigo on hover */
+            transform: translateY(-1px);
+        }
+        .btn-clear {
+            background-color: #ef4444; /* Red for clear button */
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+        }
+        .btn-clear:hover {
+            background-color: #dc2626; /* Darker red on hover */
+        }
+
+        /* Modal styling */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal-content h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #1f2937;
+        }
+        .modal-content p {
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+        }
+        .modal-content button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .modal-content button:hover {
+            background-color: #2563eb;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+            .btn-primary {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-4">부산대학교 개교 80주년 기념 청렴 릴레이 서명</h1>
+
+        <!-- 서명 폼 섹션 -->
+        <div class="p-6 bg-indigo-50 rounded-xl shadow-inner">
+            <h2 class="text-2xl font-semibold text-indigo-600 mb-4">나의 청렴 서명</h2>
+            <p class="text-gray-700 mb-6 leading-relaxed">
+                나는 부산대학교의 구성원으로서 청렴하고 공정한 자세로 업무에 임하며, 부패 없는 투명한 대학 문화 조성에 적극 동참할 것을 서명합니다.
+                개교 80주년을 맞이하여, 자랑스러운 부산대의 미래를 함께 만들어가겠습니다.
+            </p>
+
+            <form id="signatureForm" class="space-y-5">
+                <div class="form-group">
+                    <label for="affiliation">소속</label>
+                    <input type="text" id="affiliation" placeholder="소속을 입력하세요 (예: 학과, 부서)" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" placeholder="이름을 입력하세요" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="form-group">
+                    <label for="signatureCanvas" class="flex justify-between items-center mb-2">
+                        <span>디지털 서명 (마우스/터치로 서명하세요)</span>
+                        <button type="button" id="clearSignature" class="btn-clear text-sm">지우기</button>
+                    </label>
+                    <canvas id="signatureCanvas" class="signature-canvas w-full" width="400" height="150"></canvas>
+                </div>
+                <button type="submit" class="btn-primary w-full">서명하기</button>
+            </form>
+        </div>
+
+        <!-- 서명 현황 섹션 -->
+        <div class="p-6 bg-gray-50 rounded-xl shadow-inner">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">실시간 서명 현황</h2>
+            <div class="flex items-center justify-between bg-blue-100 p-4 rounded-lg mb-4 shadow-sm">
+                <p class="text-lg font-medium text-blue-800">총 서명자 수:</p>
+                <p id="totalSignatures" class="text-3xl font-bold text-blue-900">0</p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-3">최근 참여자</h3>
+                <ul id="recentSignaturesList" class="space-y-2 text-gray-800 text-sm h-48 overflow-y-auto pr-2 custom-scrollbar">
+                    <!-- 최근 서명자들이 여기에 동적으로 추가됩니다. -->
+                    <li class="p-2 bg-gray-100 rounded-md">
+                        <span class="font-bold">로딩 중...</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for messages -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button id="modalCloseButton">확인</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Imports (No type="module" for direct <script> tag support in many embedding environments) -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
+
+    <script>
+        // --- IMPORTANT: Replace with your actual Firebase project configuration ---
+        // You can find this in your Firebase project settings (Project overview -> Project settings -> General -> Your apps -> Web app)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY", // Your Firebase API Key
+            authDomain: "YOUR_AUTH_DOMAIN", // Your Firebase Auth Domain
+            projectId: "YOUR_PROJECT_ID", // Your Firebase Project ID
+            storageBucket: "YOUR_STORAGE_BUCKET", // Your Firebase Storage Bucket
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // Your Firebase Messaging Sender ID
+            appId: "YOUR_APP_ID" // Your Firebase App ID (Web)
+        };
+        // --- END OF IMPORTANT CONFIGURATION ---
+
+        // Firebase Service Instances
+        let app;
+        let db;
+        let auth;
+        let userId = null; // Will store the authenticated user ID
+
+        // Function to show custom modal messages
+        function showModal(title, message) {
+            const modal = document.getElementById('customModal');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            modal.classList.add('show');
+        }
+
+        // Event listener for modal close button
+        document.getElementById('modalCloseButton').addEventListener('click', () => {
+            document.getElementById('customModal').classList.remove('show');
+        });
+
+        // Initialize Firebase and set up authentication
+        async function initializeFirebase() {
+            try {
+                // Check if Firebase is already initialized
+                if (!app) {
+                    app = firebase.initializeApp(firebaseConfig); // Use firebase.initializeApp
+                    db = firebase.firestore(); // Use firebase.firestore()
+                    auth = firebase.auth(); // Use firebase.auth()
+                }
+
+                // Sign in anonymously for public access
+                await auth.signInAnonymously();
+                
+                // Listen for auth state changes
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Firebase Authenticated. User ID:", userId);
+                        setupSignatureListener(); // Once authenticated, start listening to signatures
+                    } else {
+                        userId = crypto.randomUUID(); // Fallback for any unauthenticated state (should not happen if signInAnonymously is successful)
+                        console.log("Firebase Auth State Changed: No user or anonymous. Using generated ID:", userId);
+                        setupSignatureListener();
+                    }
+                });
+            } catch (error) {
+                console.error("Error initializing Firebase or signing in:", error);
+                showModal("오류 발생", "데이터 로딩 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+            }
+        }
+
+        // --- Canvas Drawing Logic ---
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        // Function to set canvas size to fill its parent
+        function resizeCanvas() {
+            const parent = canvas.parentElement;
+            canvas.width = parent.clientWidth; // Use parent width for responsiveness
+            canvas.height = 150; // Fixed height for signature area
+            // Clear and redraw if necessary on resize
+            if (!drawing) { // Only clear if not actively drawing to prevent flicker
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height); // Fill background white
+            }
+        }
+
+        // Initialize canvas with white background
+        function initCanvas() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#000000'; // Black ink for signature
+        }
+
+        // Mouse events
+        canvas.addEventListener('mousedown', (e) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!drawing) return;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            drawing = false;
+            ctx.closePath();
+        });
+
+        canvas.addEventListener('mouseout', () => { // Stop drawing if mouse leaves canvas
+            drawing = false;
+            ctx.closePath();
+        });
+
+        // Touch events
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent scrolling
+            drawing = true;
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        }, { passive: false }); // Use passive: false to allow preventDefault
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // Prevent scrolling
+            if (!drawing) return;
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+            ctx.stroke();
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', () => {
+            drawing = false;
+            ctx.closePath();
+        });
+
+        document.getElementById('clearSignature').addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            initCanvas(); // Re-initialize with white background
+        });
+
+        // Resize canvas on window load and resize
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            initCanvas();
+            initializeFirebase(); // Initialize Firebase after canvas is ready
+        });
+        window.addEventListener('resize', resizeCanvas);
+
+
+        // --- Firestore Interaction Logic ---
+        const signatureForm = document.getElementById('signatureForm');
+        const totalSignaturesElement = document.getElementById('totalSignatures');
+        const recentSignaturesList = document.getElementById('recentSignaturesList');
+
+        signatureForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!userId) {
+                showModal("오류", "사용자 인증 중입니다. 잠시 후 다시 시도해주세요.");
+                return;
+            }
+
+            const affiliation = document.getElementById('affiliation').value.trim();
+            const name = document.getElementById('name').value.trim();
+
+            if (affiliation === '' || name === '') {
+                showModal("알림", "소속과 이름을 모두 입력해주세요.");
+                return;
+            }
+
+            // Check if canvas is empty (mostly white pixels)
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            let isEmpty = true;
+            for (let i = 0; i < imageData.length; i += 4) {
+                // Check if color is not close to white (allow for some anti-aliasing fuzz)
+                if (imageData[i] < 250 || imageData[i+1] < 250 || imageData[i+2] < 250) {
+                    isEmpty = false;
+                    break;
+                }
+            }
+            if (isEmpty) {
+                showModal("알림", "서명을 해주세요.");
+                return;
+            }
+
+            const signatureDataUrl = canvas.toDataURL('image/png'); // Get signature as PNG data URL
+
+            try {
+                // Firestore collection reference (fixed path for external hosting)
+                const signaturesCollectionRef = db.collection("publicIntegritySignatures"); // Simplified collection path
+
+                await signaturesCollectionRef.add({
+                    userId: userId, // Current user's ID
+                    affiliation: affiliation,
+                    name: name,
+                    signature: signatureDataUrl,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp() // Use server timestamp
+                });
+
+                showModal("서명 완료", "청렴 서명에 참여해주셔서 감사합니다!");
+                signatureForm.reset(); // Clear form
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                initCanvas(); // Re-initialize with white background
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                showModal("오류 발생", "서명 저장 중 오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        });
+
+        // Real-time listener for signatures
+        function setupSignatureListener() {
+            if (!db) {
+                console.log("Firestore not initialized yet. Retrying listener setup...");
+                setTimeout(setupSignatureListener, 500); // Retry after 500ms
+                return;
+            }
+
+            // Query to get recent signatures
+            const recentSignaturesQuery = db.collection("publicIntegritySignatures").orderBy("timestamp", "desc").limit(10);
+
+            recentSignaturesQuery.onSnapshot((snapshot) => {
+                const recentSigners = [];
+                snapshot.docs.forEach(doc => {
+                    const data = doc.data();
+                    recentSigners.push(data);
+                });
+
+                // Update recent signers list
+                recentSignaturesList.innerHTML = ''; // Clear previous list
+                if (recentSigners.length === 0) {
+                    recentSignaturesList.innerHTML = '<li class="p-2 text-gray-500">아직 서명 참여자가 없습니다.</li>';
+                } else {
+                    recentSigners.forEach(signer => {
+                        const li = document.createElement('li');
+                        li.className = 'p-2 bg-gray-100 rounded-md shadow-sm text-sm';
+                        // Display timestamp if available, otherwise "날짜 없음"
+                        const timestamp = signer.timestamp ? new Date(signer.timestamp.toDate()).toLocaleString() : '날짜 없음';
+                        li.innerHTML = `<span class="font-bold text-indigo-700">${signer.name}</span> (${signer.affiliation}) - <span class="text-gray-600 text-xs">${timestamp}</span>`;
+                        recentSignaturesList.appendChild(li);
+                    });
+                }
+            }, (error) => {
+                console.error("Error listening to recent signatures: ", error);
+                showModal("데이터 로딩 오류", "최근 서명 현황을 불러오는 중 오류가 발생했습니다.");
+            });
+
+            // Get total count (can be separate query or aggregated)
+            // Note: For a very large collection, this might be inefficient.
+            // Firestore offers aggregation queries for production, but this simple fetch is fine for moderate size.
+            db.collection("publicIntegritySignatures").get()
+                .then(fullSnapshot => {
+                    totalSignaturesElement.textContent = fullSnapshot.size;
+                })
+                .catch(error => {
+                    console.error("Error fetching total signature count:", error);
+                    totalSignaturesElement.textContent = "오류";
+                });
+        }
+    </script>
+    <!--
+        [Google Sites "URL 삽입" 참고 사항]
+        이 코드는 외부 웹 호스팅 서비스(예: Firebase Hosting, Netlify, GitHub Pages)에 배포한 후
+        해당 URL을 Google Sites에 "URL 삽입" 기능으로 삽입하는 것을 전제로 합니다.
+
+        **중요 경고:**
+        Google Sites는 보안상의 이유로 외부 iframe 콘텐츠를 차단할 수 있습니다.
+        (예: X-Frame-Options 헤더, Content-Security-Policy).
+        이 경우 삽입된 웹페이지가 Google Sites 내에서 올바르게 표시되지 않을 수 있습니다 (빈 화면, 오류 등).
+        이러한 문제는 코드 수정만으로는 해결하기 어렵습니다.
+
+        **권장 대안:**
+        가장 확실하게 Google Sites와 연동하려면, Google Apps Script를 사용하여 웹 앱을 개발하는 것을 고려하십시오.
+        Apps Script는 Google 서비스와 통합되어 Google Sites에 안전하게 삽입될 수 있습니다.
+    -->
+</body>
+</html>
